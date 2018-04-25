@@ -8,6 +8,7 @@ var app = require('../app');
 var debug = require('debug')('tallygo-example-server:server');
 var http = require('http');
 var websockets = require('../lib/websockets');
+var log = require('../lib/log');
 
 /**
  * Get port from environment and store in Express.
@@ -92,5 +93,5 @@ function onListening() {
   var bind = typeof addr === 'string'
     ? 'pipe ' + addr
     : 'port ' + addr.port;
-  console.log('Listening on ' + bind);
+  log('Listening on ' + bind);
 }
