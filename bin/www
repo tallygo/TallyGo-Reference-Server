@@ -7,6 +7,7 @@
 var app = require('../app');
 var debug = require('debug')('tallygo-example-server:server');
 var http = require('http');
+var websockets = require('../lib/websockets');
 
 /**
  * Get port from environment and store in Express.
@@ -20,6 +21,11 @@ app.set('port', port);
  */
 
 var server = http.createServer(app);
+
+/**
+ * Create WebSockets server
+ */
+websockets.init(server);
 
 /**
  * Listen on provided port, on all network interfaces.
