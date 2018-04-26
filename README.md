@@ -1,16 +1,18 @@
-# TallyGo Example Server
+# TallyGo Reference Server
 
-A very simple Node.js server that acts as a stand-in for your custom server backend, and demonstrates how you could exchange data between your mobile app and your own server. It implements basic functionality as shown in our mobile app usage examples. [Check them out!](https://tallygo.com/docs)
+A very simple Node.js server that acts as a stand-in for your custom server backend, and demonstrates how you could exchange data between your mobile app and your own server. It implements a basic version of the server-side functionality as used in our [iOS Reference App](https://github.com/tallygo/TallyGo-iOS-Reference-App) and [Android Reference App](https://github.com/tallygo/TallyGo-Android-Reference-App).
 
 ## Prerequisites
 
 You need to have [Node.js](https://nodejs.org/) and [NPM](https://www.npmjs.com) installed already.
 
-## First-Time Setup
+## Setup
 
 Before running the server for the first time, execute this command:
 
     npm install
+
+You may also need to do this again whenever you do a `git pull`.
 
 ## Configuration
 
@@ -18,7 +20,7 @@ By default, the server runs on port 3200. To use a different port, pass the `POR
 
 ## Running the Server
 
-To start the server:
+To start the server, run this command:
 
     ./bin/www
 
