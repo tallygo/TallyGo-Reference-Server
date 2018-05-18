@@ -22,7 +22,7 @@ By default, the server runs on port 3200. To use a different port, pass the `POR
 
 To start the server, run this command:
 
-    ./bin/www
+    npm start
 
 To exit the server, type Ctrl-C.
 
