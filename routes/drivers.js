@@ -44,7 +44,24 @@ router.put('/route_segment', function(req, res, next) {
   
   log("Received driver route segment: " + loggedInfo);
   
-  websockets.broadcastEvent('route_segment', req.body);
+  websockets.broadcastEvent('route_segment', routeSegment);
+  
+  res.sendStatus(200);
+});
+
+router.post('/motion', function (req, res, next) {
+  var motion = req.body;
+  
+  if (motion.id == null || motion.points == null || motion.timeInterval == null) {
+    res.sendStatus(400);
+    return;
+  }
+  
+  motion.timestamp = new Date()
+  
+  log("Received driver motion: " + util.inspect(motion));
+  
+  websockets.broadcastEvent('motion', motion);
   
   res.sendStatus(200);
 });
