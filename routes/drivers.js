@@ -12,9 +12,10 @@ router.put('/current_location', function(req, res, next) {
     return;
   }
   
-  log("Received driver current location: " + req.body.latitude + "," + req.body.longitude);
+  session_id = req.get('x-temporary-id');
+  log("Received driver current location from session " + session_id + ": " + req.body.latitude + "," + req.body.longitude);
   
-  websockets.broadcastEvent('current_location', req.body);
+  websockets.broadcastEvent('current_location', req.body, session_id);
   
   res.sendStatus(200);
 });
@@ -25,9 +26,10 @@ router.put('/eta', function(req, res, next) {
     return;
   }
   
-  log("Received driver ETA: " + req.body.ETA);
+  session_id = req.get('x-temporary-id');
+  log("Received driver ETA from session " + session_id + ": " + req.body.ETA);
   
-  websockets.broadcastEvent('eta', req.body);
+  websockets.broadcastEvent('eta', req.body, session_id);
   
   res.sendStatus(200);
 });
@@ -42,9 +44,10 @@ router.put('/route_segment', function(req, res, next) {
   
   var loggedInfo = util.inspect(_.extend(_.omit(routeSegment, 'points'), {'points': '(omitted for brevity)'}));
   
-  log("Received driver route segment: " + loggedInfo);
+  session_id = req.get('x-temporary-id');
+  log("Received driver route segment from session " + session_id + ": " + loggedInfo);
   
-  websockets.broadcastEvent('route_segment', req.body);
+  websockets.broadcastEvent('route_segment', req.body, session_id);
   
   res.sendStatus(200);
 });
