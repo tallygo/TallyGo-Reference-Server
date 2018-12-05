@@ -6,35 +6,43 @@ var _ = require('underscore');
 var log = require('../lib/log');
 var websockets = require('../lib/websockets');
 
-router.put('/current_location', function(req, res, next) {
+function parseSession(req, res, next) {
+  sessionID = req.get('x-temporary-id');
+  if (typeof sessionID == 'undefined' || sessionID == '') {
+    sessionID = 'anonymous';
+  }
+  
+  req.sessionID = sessionID;
+  next()
+}
+
+router.put('/current_location', parseSession, function(req, res) {
   if (req.body.latitude == null || req.body.longitude == null) {
     res.sendStatus(400);
     return;
   }
   
-  session_id = req.get('x-temporary-id');
-  log("Received driver current location from session " + session_id + ": " + req.body.latitude + "," + req.body.longitude);
+  log("Received driver current location from session " + req.sessionID + ": " + req.body.latitude + "," + req.body.longitude);
   
-  websockets.broadcastEvent('current_location', req.body, session_id);
+  websockets.broadcastEvent('current_location', req.body, req.sessionID);
   
   res.sendStatus(200);
 });
 
-router.put('/eta', function(req, res, next) {
+router.put('/eta', parseSession, function(req, res) {
   if (req.body.ETA == null) {
     res.sendStatus(400);
     return;
   }
   
-  session_id = req.get('x-temporary-id');
-  log("Received driver ETA from session " + session_id + ": " + req.body.ETA);
+  log("Received driver ETA from session " + req.sessionID + ": " + req.body.ETA);
   
-  websockets.broadcastEvent('eta', req.body, session_id);
+  websockets.broadcastEvent('eta', req.body, req.sessionID);
   
   res.sendStatus(200);
 });
 
-router.put('/route_segment', function(req, res, next) {
+router.put('/route_segment', parseSession, function(req, res) {
   var routeSegment = req.body;
   
   if (routeSegment.points == null) {
@@ -44,10 +52,9 @@ router.put('/route_segment', function(req, res, next) {
   
   var loggedInfo = util.inspect(_.extend(_.omit(routeSegment, 'points'), {'points': '(omitted for brevity)'}));
   
-  session_id = req.get('x-temporary-id');
-  log("Received driver route segment from session " + session_id + ": " + loggedInfo);
+  log("Received driver route segment from session " + req.sessionID + ": " + loggedInfo);
   
-  websockets.broadcastEvent('route_segment', req.body, session_id);
+  websockets.broadcastEvent('route_segment', req.body, req.sessionID);
   
   res.sendStatus(200);
 });
