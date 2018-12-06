@@ -29,3 +29,12 @@ To exit the server, type Ctrl-C.
 ## Development
 
 Most of the interesting stuff is in the `routes` folder, particularly `drivers.js`.
+
+## Triggering Server to send fake WebSocket events for multiple vehicle demo
+
+With the server running in another terminal window:
+
+    curl -X GET http://localhost:3200/multiple_vehicles/send_events
+
+The interval between WebSocket message broadcasts can be changed by editing
+the `eventBroadcastInterval` constant in the `routes/multiple_vehicles.js` file
