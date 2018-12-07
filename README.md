@@ -34,7 +34,11 @@ Most of the interesting stuff is in the `routes` folder, particularly `drivers.j
 
 With the server running in another terminal window:
 
-    curl -X GET http://localhost:3200/multiple_vehicles/send_events
+    npm simulate
+
+    or
+
+    curl -X POST http://localhost:3200/simulation/start
 
 The interval between WebSocket message broadcasts can be changed by editing
 the `eventBroadcastInterval` constant in the `routes/multiple_vehicles.js` file

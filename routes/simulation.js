@@ -23,7 +23,7 @@ function slowEach(array, interval, callback) {
   }
 }
 
-router.get('/send_events', function(req, res, next) {
+router.post('/start', function(req, res, next) {
   slowEach(merged, eventBroadcastInterval, function(received_msg, index) {
     log(
       "Received driver current location for session " +
